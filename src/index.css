@@ -1,0 +1,239 @@
+/* src/index.css */
+@import "tailwindcss";
+
+/* ─── Dark mode: class-toggle strategy ─── */
+/* Required in v4 — replaces darkMode: 'class' in tailwind.config.ts */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Google Fonts are loaded in index.html ─── */
+
+/* ─────────────────────────────────────────────
+   @theme — Hayao no Niwa v2.0.0 token system
+   Everything declared here becomes both a CSS
+   custom property AND a Tailwind utility class.
+───────────────────────────────────────────── */
+@theme {
+  /* Fonts */
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-body:    "Atkinson Hyperlegible", "Karla", system-ui, sans-serif;
+  --font-hand:    "Caveat", cursive;
+  --font-mono:    "JetBrains Mono", monospace;
+
+  /* Wobble border-radius — generates rounded-wobble-card etc. */
+  --radius-wobble-card: 14px 11px 16px 9px;
+  --radius-wobble-btn:  10px 8px 11px 9px;
+  --radius-wobble-sm:   9px 8px 10px 7px;
+  --radius-wobble-chip: 7px 5px 8px 6px;
+  --radius-wobble-lg:   18px 14px 20px 12px;
+
+  /* Animations */
+  --animate-leaf-sway:    leafSway 3s ease-in-out infinite;
+  --animate-paper-settle: paperSettle 360ms cubic-bezier(0.22,0.61,0.36,1) both;
+  --animate-modal-drop:   modalDrop 240ms cubic-bezier(0.22,0.61,0.36,1) both;
+  --animate-modal-up:     modalSlideUp 260ms cubic-bezier(0.22,0.61,0.36,1) both;
+  --animate-leaf-ambient: leafSway 28s ease-in-out infinite;
+
+  /* Keyframes live inside @theme in v4 */
+  @keyframes leafSway {
+    0%, 100% { transform: rotate(-8deg) scale(1); }
+    50%       { transform: rotate(8deg) scale(1.05); }
+  }
+  @keyframes paperSettle {
+    from { opacity: 0; transform: translateY(6px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes modalDrop {
+    from { opacity: 0; transform: translateY(-12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes modalSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ─── Weather: Late Afternoon, Early Autumn ─── */
+:root {
+  /* Paper family */
+  --paper:          #F6F1E4;
+  --paper-shadow:   #E8E0CC;
+  --paper-mid:      #EDE7D5;
+
+  /* Ink family */
+  --ink:            #2E2A22;
+  --ink-soft:       #5C5645;
+  --ink-ghost:      #9B9080;
+
+  /* Primary action — Cedar green */
+  --forest:         #3F5B43;
+  --forest-deep:    #2A3E2D;
+  --forest-light:   #6B8F6F;
+
+  /* Accents */
+  --rust:           #B5602E;
+  --rust-light:     #D4845A;
+  --sky:            #7FA6B0;
+  --sky-light:      #A8C8D0;
+  --gold:           #C9A04D;
+  --gold-light:     #E0BC6E;
+
+  /* Semantic */
+  --error:          #9C4A3C;
+  --error-light:    #C97A6E;
+  --success:        var(--forest);
+  --warning:        var(--rust);
+
+  /* Priority stripes */
+  --priority-low:    #8BA888;
+  --priority-medium: #7FA6B0;
+  --priority-high:   #C9944D;
+  --priority-urgent: #B5602E;
+
+  /* Surfaces */
+  --surface-card:   #FAF7EF;
+  --surface-modal:  #F9F5EC;
+  --surface-input:  transparent;
+
+  /* Borders */
+  --border-default: rgba(92, 86, 69, 0.28);
+  --border-focus:   var(--sky);
+  --border-strong:  rgba(46, 42, 34, 0.5);
+
+  /* Shadows */
+  --shadow-pin:     8px 12px 24px -6px rgba(63, 50, 20, 0.22);
+  --shadow-card:    4px 6px 14px -4px rgba(63, 50, 20, 0.18);
+  --shadow-modal:   14px 20px 48px -10px rgba(63, 50, 20, 0.28);
+  --shadow-button:  0 3px 0 var(--forest-deep), 0 6px 10px -4px rgba(42,62,45,0.4);
+
+  /* Text scale */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.25rem;
+  --text-xl:   1.563rem;
+  --text-2xl:  1.953rem;
+  --text-3xl:  2.441rem;
+
+  /* Spacing */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  20px;
+  --space-5:  32px;
+  --space-6:  52px;
+  --space-7:  84px;
+}
+
+/* ─── Dark mode: Overcast Coastal Morning ─── */
+/* In v4, .dark overrides work the same as v3 because we declared
+   @custom-variant dark above — the .dark class on <html> triggers it */
+.dark {
+  --paper:          #232B28;
+  --paper-shadow:   #1A211E;
+  --paper-mid:      #1E2623;
+
+  --ink:            #EDE6D3;
+  --ink-soft:       #A9A290;
+  --ink-ghost:      #6B6658;
+
+  --forest:         #7FA383;
+  --forest-deep:    #5A7A5E;
+  --forest-light:   #A0C4A4;
+
+  --rust:           #D08855;
+  --rust-light:     #E0A880;
+  --sky:            #9ABEC8;
+  --gold:           #E0BC6E;
+  --gold-light:     #EDCE8F;
+
+  --error:          #C97A6E;
+  --error-light:    #DFA090;
+
+  --priority-low:    #6A8A6A;
+  --priority-medium: #9ABEC8;
+  --priority-high:   #D4A45A;
+  --priority-urgent: #D08855;
+
+  --surface-card:   #2A3430;
+  --surface-modal:  #283230;
+
+  --border-default: rgba(169, 162, 144, 0.22);
+  --border-strong:  rgba(237, 230, 211, 0.4);
+
+  --shadow-pin:     8px 12px 28px -6px rgba(0, 0, 0, 0.45);
+  --shadow-card:    4px 6px 16px -4px rgba(0, 0, 0, 0.35);
+  --shadow-modal:   14px 20px 56px -10px rgba(0, 0, 0, 0.55);
+  --shadow-button:  0 3px 0 var(--forest-deep), 0 6px 10px -4px rgba(0,0,0,0.4);
+}
+
+/* ─── Base styles ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--paper);
+  color: var(--ink);
+  margin: 0;
+  padding: 0;
+  /* v4: buttons default to cursor: default — override here if desired */
+  button { cursor: pointer; }
+}
+
+p, li, td, th, .body-text {
+  text-shadow: 0 0 0.4px rgba(46, 42, 34, 0.12);
+}
+
+.dark p,
+.dark li,
+.dark td,
+.dark .body-text {
+  text-shadow: 0 0 0.4px rgba(237, 230, 211, 0.12);
+}
+
+/* ─── Paper grain surface ─── */
+.paper-surface {
+  background-color: var(--paper);
+  background-image: url("/grain.svg");
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+}
+
+.dark .paper-surface {
+  background-blend-mode: screen;
+}
+
+/* ─── Scrollbar styling ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 3px;
+}
+
+/* ─── Focus ring ─── */
+:focus-visible {
+  outline: 2.5px solid var(--sky);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .ambient-leaf { display: none !important; }
+}
