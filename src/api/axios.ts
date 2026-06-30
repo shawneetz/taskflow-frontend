@@ -5,8 +5,14 @@ interface RetryConfig extends InternalAxiosRequestConfig {
   _retry?: boolean
 }
 
+// VITE_API_BASE_URL is baked in at build time.
+// - Dev (npm run dev): set in .env.local, e.g. http://localhost:8000
+// - Docker fullstack: set to /api (nginx rewrites to backend:8000)
+// - Empty string: all requests are relative to the page origin
+const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? ''
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: BASE_URL,
   headers: { 'Content-Type': 'application/json' },
 })
 
@@ -28,10 +34,7 @@ api.interceptors.response.use(
     try {
       const store = useAuthStore
       const refresh = store.getState().refreshToken
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/auth/refresh`,
-        { refresh_token: refresh },
-      )
+      const { data } = await axios.post(`${BASE_URL}/auth/refresh`, { refresh_token: refresh })
       store.getState().setTokens(data.access_token, refresh!)
       original.headers.Authorization = `Bearer ${data.access_token}`
       return api(original)
